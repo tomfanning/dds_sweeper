@@ -22,7 +22,7 @@ double Fstart_MHz = 1;  // Start Frequency for sweep
 double Fstop_MHz = 22;  // Stop Frequency for sweep
 double current_freq_MHz; // Temp variable used during sweep
 long serial_input_number; // Used to build number from serial stream
-int num_steps = 500; // Number of steps to use in the sweep
+int num_steps = 100; // Number of steps to use in the sweep
 char incoming_char; // Character read from serial stream
 
 
@@ -130,7 +130,13 @@ void Perform_sweep(){
   double REV=0;
   double VSWR;
   double Fstep_MHz = (Fstop_MHz-Fstart_MHz)/num_steps;
- 
+
+  SetDDSFreq((current_freq_MHz-Fstep_MHz)*1000000);
+  delay(10);
+  REV = analogRead(A0);
+  FWD = analogRead(A1);
+  delay(10);
+  
   // Start loop 
   for(int i=0;i<=num_steps;i++){
     // Calculate current frequency
@@ -153,18 +159,14 @@ void Perform_sweep(){
     // Send current line back to PC over serial bus
     Serial.print(current_freq_MHz*1000000);
     
+    Serial.print(",");      // added GS format for new sweeper
+    Serial.print(int(VSWR*1000));  // made println to terminate
+    
     Serial.print(",");
     Serial.print(FWD);
     Serial.print(",");
-    Serial.print(REV);
-    
-//    Serial.print(",0,");  // removed GS format for new sweeper
-    Serial.print(",");      // added GS format for new sweeper
-    Serial.println(int(VSWR*1000));  // made println to terminate
-//    Serial.print(",");  // removed below
-//    Serial.print(FWD);
-//    Serial.print(",");
-//    Serial.println(REV);
+    Serial.println(REV);
+
   }
   // Send "End" to PC to indicate end of sweep
   Serial.println("End");
