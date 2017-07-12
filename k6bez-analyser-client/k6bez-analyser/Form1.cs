@@ -44,13 +44,13 @@ namespace k6bez_analyser
                 return;
             }
 
-            if (start <= 0 || start > 30)
+            if (start <= 0)
             {
                 MessageBox.Show("Start frequency out of range");
                 return;
             }
 
-            if (end <= 0 || end > 30)
+            if (end <= 0)
             {
                 MessageBox.Show("End frequency out of range");
                 return;
@@ -89,6 +89,7 @@ namespace k6bez_analyser
             chart1.ChartAreas[0].AxisX.Minimum = results.Min(r => r.FreqHz) / 1000000.0;
             chart1.ChartAreas[0].AxisX.Maximum = results.Max(r => r.FreqHz) / 1000000.0;
             chart1.ChartAreas[0].AxisX.Title = "F (MHz)";
+            chart1.Series[0].BorderWidth = 5;
 
             double rangeMHz = (results.Last().FreqHz - results[0].FreqHz) / 1000000.0;
 
@@ -179,6 +180,53 @@ namespace k6bez_analyser
         private void DisableControls()
         {
             startF.Enabled = endF.Enabled = continuous.Enabled = false;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            startF.Text = "27.000";
+            endF.Text = "29.000";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            startF.Text = "13.750";
+            endF.Text = "14.500";
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            startF.Text = "6.900";
+            endF.Text = "7.400";
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            startF.Text = "3.200";
+            endF.Text = "4.000";
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            startF.Text = "1.000";
+            endF.Text = "30.000";
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            startF.Text = "1.000";
+            endF.Text = "55.000";
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            startF.Text = "49.000";
+            endF.Text = "53.000";
         }
     }
 
