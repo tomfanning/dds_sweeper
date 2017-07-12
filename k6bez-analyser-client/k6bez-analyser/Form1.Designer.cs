@@ -1,4 +1,4 @@
-﻿namespace k6bez_analyser
+﻿ namespace k6bez_analyser
 {
     partial class Form1
     {
